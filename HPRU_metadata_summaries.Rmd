@@ -106,16 +106,4 @@ study
 Column {data-width=350}
 -----------------------------------------------------------------------
 
-### Chart C
-
-```{r}
-plot(pressure)
-```
-
-### Chart D
-
-```{r}
-plot(airmiles)
-
-```
 
