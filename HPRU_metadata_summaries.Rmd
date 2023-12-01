@@ -1,0 +1,121 @@
+---
+title: "Themed dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    theme:
+      bg: "#101010"
+      fg: "#FDF7F7" 
+      primary: "#ED79F9"
+      base_font:
+        google: Prompt
+      code_font:
+        google: JetBrains Mono
+    orientation: columns
+    vertical_layout: fill
+runtime: shiny    
+---
+
+```{r global, include=FALSE}
+options(warn=-1)
+library(flexdashboard)
+# Install thematic and un-comment for themed static plots (i.e., ggplot2)
+# thematic::thematic_rmd()
+library(ggplot2)
+library(tidyr)
+library(plyr)
+library(dplyr)
+library(tidyverse)
+library(forcats)
+
+```
+
+Column {data-width=650 .tabset}
+-----------------------------------------------------------------------
+
+### Metadata linkage
+
+```{r}
+blackwellmeta <- read.csv2("Blackwell_geoloc_year_host_specimen.csv", sep = ",", header = TRUE)
+blackwellmlst <- read.csv2("ecoli_mlst_7gene_blackwell.tsv", sep = "\t", header = TRUE)
+allblackwellmeta <- data.frame(right_join(blackwellmeta, blackwellmlst, by = "ID"))
+#allblackwellmeta <- distinct(data.frame(right_join(blackwellmeta, blackwellmlst, by = "ID")))
+#View(allblackwellmeta)
+
+unpubmeta <- read.csv2("Unpublished_geoloc_year_host_specimen.csv", sep = ",", header = TRUE)
+unpubmlst <- read.csv2("n117_ecoli_mlst_7gene_unpublished.tsv", sep = "\t", header = TRUE)
+allunpubmeta <- distinct(data.frame(right_join(unpubmeta, unpubmlst, by = "ID")))
+#View(allunpubmeta)
+
+kevmeta <- read.csv2("KevChau_geoloc_year_host_specimen.csv", sep = ",", header = TRUE)
+kevmlst <- read.csv2("mlst_7gene_kev.tsv", sep = "\t", header = TRUE)
+allkevmeta <- distinct(data.frame(right_join(kevmeta, kevmlst, by = "ID")))
+#View(allkevmeta)
+
+rehabmeta <- read.csv2("REHAB_geoloc_year_host_specimen.csv", sep = ",", header = TRUE)
+rehabmlst <- read.csv2("n23_ecoli_mlst_7gene_rehab.tsv", sep = "\t", header = TRUE)
+allrehabmeta <- distinct(data.frame(right_join(rehabmeta, rehabmlst, by = "ID")))
+#View(allrehabmeta)
+
+enterometa <- read.csv2("Enterobase_geoloc_year_host_specimen.csv", sep = ",", header = TRUE)
+enteromlst <- read.csv2("mlst_7gene_enterobase.tsv", sep = "\t", header = TRUE)
+allenterometa <- distinct(data.frame(right_join(enterometa, enteromlst, by = "ID")))
+#View(allenterometa)
+
+
+#Perform inner join on my_dataframe1 and my_dataframe2 based on id column
+merged <- distinct(data.frame(rbind.fill(allblackwellmeta, allunpubmeta, allkevmeta, allrehabmeta, allenterometa)))
+
+mergedHPRUmeta <- distinct(within(merged, rm(Study)))
+mergedHPRUmeta <- replace(mergedHPRUmeta, is.na(mergedHPRUmeta), "Unknown")
+mergedHPRUmeta <- replace(mergedHPRUmeta, mergedHPRUmeta=='', 'Unknown')
+mergedHPRUmeta[is.na(mergedHPRUmeta)] = "Unknown"
+mergedHPRUmeta$Year[mergedHPRUmeta$Year == 'unknown'] <- 'Unknown'
+mergedHPRUmeta$Year[mergedHPRUmeta$Year == 'missing'] <- 'Unknown'
+mergedHPRUmeta$Source[mergedHPRUmeta$Source == 'Urine'] <- 'urine'
+mergedHPRUmeta$Source[mergedHPRUmeta$Source == 'Blood_whole'] <- 'blood'
+mergedHPRUmeta$Source[mergedHPRUmeta$Source == 'Tissue_Liver'] <- 'liver'
+mergedHPRUmeta$Source[mergedHPRUmeta$Source == 'CAECUM'] <- 'caecum'
+mergedHPRUmeta$Source[mergedHPRUmeta$Source == 'Human'] <- 'human'
+mergedHPRUmeta$Source[mergedHPRUmeta$Source == 'PLEURAL FLUID'] <- 'pleural fluid'
+mergedHPRUmeta$Source[mergedHPRUmeta$Source == 'Water Sewage'] <- 'wastewater'
+mergedHPRUmeta$Source[mergedHPRUmeta$Source == 'The intestines of the diarrhea donkey foal'] <- 'animal'
+mergedHPRUmeta$Source[mergedHPRUmeta$Source == 'Abdominal'] <- 'abdominal'
+mergedHPRUmeta$Source[mergedHPRUmeta$Source == 'Animal'] <- 'animal'
+mergedHPRUmeta$Source[mergedHPRUmeta$Source == 'Canal'] <- 'canal'
+mergedHPRUmeta$Source[mergedHPRUmeta$Source == 'BLOOD CULTURE'] <- 'blood'
+mergedHPRUmeta$Source[mergedHPRUmeta$Source == 'Blood'] <- 'blood'
+mergedHPRUmeta$Host[mergedHPRUmeta$Host == 'cattle'] <- 'Cattle'
+mergedHPRUmeta$Host[mergedHPRUmeta$Host == 'donkey'] <- 'Donkey'
+mergedHPRUmeta$Host[mergedHPRUmeta$Host == 'missing'] <- 'Unknown'
+mergedHPRUmeta$Host[mergedHPRUmeta$Host == 'Missing'] <- 'Unknown'
+str(mergedHPRUmeta)
+#View(mergedHPRUmeta)
+write.csv(mergedHPRUmeta, file = "SUMMARY_HPRU_CTXM15postive_metadata_geoloc_year_host_source_mlst.csv")
+
+```
+
+### Chat A
+
+```{r}
+study <- ggplot(data=mergedHPRUmeta, aes(reorder(x=Country, group=Country, fill=Source))) +
+    geom_density(adjust=1.5) 
+   
+study
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Chart C
+
+```{r}
+plot(pressure)
+```
+
+### Chart D
+
+```{r}
+plot(airmiles)
+
+```
+
