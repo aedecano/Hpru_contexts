@@ -1,0 +1,22 @@
+name: abricate_env
+channels:
+  - bioconda/label/cf201901
+  - bioconda
+  - conda-forge
+  - defaults
+  - r
+dependencies:
+  - _libgcc_mutex=0.1=conda_forge
+  - _openmp_mutex=4.5=2_gnu
+  - libgcc-ng=12.1.0=h8d9b700_16
+  - libgomp=12.1.0=h8d9b700_16
+  - perl=5.26.2=h36c2ea0_1008
+  - perl-carp=1.38=pl526_1
+  - perl-exporter=5.72=pl526_1
+  - perl-exporter-tiny=1.002001=pl526_0
+  - perl-extutils-makemaker=7.34=pl526_3
+  - perl-file-slurp=9999.25=pl526_0
+  - perl-list-moreutils=0.428=pl526_1
+  - perl-list-moreutils-xs=0.428=pl526_0
+  - perl-xsloader=0.24=pl526_0
+prefix: /home/ndm.local/arund/miniconda3/envs/abricate_env

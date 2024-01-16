@@ -1,0 +1,13 @@
+name: mafft_env
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+  - r
+dependencies:
+  - _libgcc_mutex=0.1=conda_forge
+  - _openmp_mutex=4.5=2_gnu
+  - libgcc-ng=12.1.0=h8d9b700_16
+  - libgomp=12.1.0=h8d9b700_16
+  - mafft=7.505=hec16e2b_0
+prefix: /home/ndm.local/arund/miniconda3/envs/mafft_env
