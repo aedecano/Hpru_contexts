@@ -690,9 +690,10 @@ library(RColorBrewer)
 display.brewer.all(colorblindFriendly = TRUE)
 
 # Read the gene details from the file
-gene_data1 <- read_delim("output.tsv", delim = "\t", show_col_types = FALSE)
+gene_data1 <- read_delim("output_SAMEA2385639.tsv", delim = "\t", show_col_types = FALSE)
 gene_data1$gene_label[gene_data1$gene_label == "Beta-lactamase CTX-M-1"] <- "Beta-lactamase CTX-M-15"
 gene_data1$gene_label[gene_data1$gene_label == "Periplasmic murein peptide-binding protein"] <- "Periplasmic murein peptide-binding protein mppA"
+gene_data1$gene_label[gene_data1$gene_label == "hypothetical protein"] <- "Spacer sequence"
 # Aggregate the gene data by cluster name
 aggregated_gene_data <- aggregate(cbind(gene_start, gene_end) ~ cluster_name + gene_label, data = gene_data1, FUN = function(x) c(min(x), max(x)))
 
@@ -702,9 +703,28 @@ gene_plot <- ggplot(aggregated_gene_data, aes(xmin = gene_start[,1], xmax = gene
   scale_y_discrete(expand = c(0.02, 0.02)) +
   scale_fill_brewer(palette="RdYlBu") +
   theme_genes() +
-  labs(y = "Cluster Name", fill = "Gene/Gene product")
+  labs(y = "Sample Name", x = "Position", fill = "Gene/Gene product")
 
 # Display the plot
 gene_plot
 
+## Anchor the alignments on blaCTX-M-15
 
+# Set larger plot dimensions
+plot_width <- 8  # Width in inches
+plot_height <- 6  # Height in inches
+
+dummies <- make_alignment_dummies(
+  gene_data1,
+  aes(xmin = gene_start, xmax = gene_end, y = cluster_name, id = gene_label),
+  on = "Beta-lactamase CTX-M-15"
+)
+
+aligned_genes <- ggplot(gene_data1, aes(xmin = gene_start, xmax = gene_end, y = cluster_name, fill = gene_label)) +
+  geom_gene_arrow() +
+  geom_blank(data = dummies) +
+  facet_wrap(~ cluster_name, scales = "free", ncol = 1) +
+  scale_fill_brewer(palette = "RdYlBu") +
+  theme_genes()
+
+ggsave("aligned_genes_plot.pdf", aligned_genes, width = 8, height = 6)
