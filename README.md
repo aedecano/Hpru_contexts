@@ -37,6 +37,10 @@ Batch run:
 ```
 bash bin/batch_extract_StartEnd_genes.sh
 ```
+Concatenate the extracted segments for the next steps e.g. progressive alignment and phylogeny generation
+```
+cat *_cut.fasta > concatenated_flank_cut.fasta
+```
 
 
 ## Code Structure
