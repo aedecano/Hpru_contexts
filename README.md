@@ -20,21 +20,21 @@ This repository contains codes for collecting global genome assemblies of Escher
   Extract individual gene products from Genbank files
 ```
 python3 bin/extract_gene_product.py $file.gbk -p "IS1380 family transposase ISEcp1" "Beta-lactamase CTX-M-1"
-
+```
 Batch run:
-
+```
 bash bin/batch_extract_gene_product.sh
 ```
   Extract segments from ISEcp1 to blaCTX-M-15 and collapse under one header
 ```
 python3 bin/extract_startgene_endgene_collapse.py $file.gbk -s "IS1380 family transposase ISEcp1" -e "Beta-lactamase CTX-M-1"
-
+```
 Don't collapse:
-
+```
 python3 bin/extract_startgene_endgene.py $file.gbk -s "IS1380 family transposase ISEcp1" -e "Beta-lactamase CTX-M-1"
-
+```
 Batch run:
-
+```
 bash bin/batch_extract_StartEnd_genes.sh
 ```
 
