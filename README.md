@@ -12,6 +12,10 @@ This repository contains codes for collecting global genome assemblies of Escher
 
 4. **Contig Classification**: Following annotation, contigs within each assembly are classified as either chromosomal or plasmid based on sequence features, such as size, GC content, and presence of plasmid-associated genes. This classification aids in understanding the genomic context and potential mobility of the blaCTX-M-15 gene.
 
+5. **Flanking Sequence Extraction**: Flanking sequences spanning 5 kilobases upstream and downstream of the blaCTX-M-15 gene are extracted from the genome assemblies. These sequences provide context for understanding the genetic environment surrounding the gene and potential regulatory elements or mobile genetic elements associated with its dissemination.
+
+
+
 ## Code Structure
 
 - `modules/`: Contains the processes for the Nexflow subworkflows.
