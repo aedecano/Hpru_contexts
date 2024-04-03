@@ -14,6 +14,29 @@ This repository contains codes for collecting global genome assemblies of Escher
 
 5. **Flanking Sequence Extraction**: Flanking sequences spanning 5 kilobases upstream and downstream of the blaCTX-M-15 gene are extracted from the genome assemblies. These sequences provide context for understanding the genetic environment surrounding the gene and potential regulatory elements or mobile genetic elements associated with its dissemination.
 
+6. **Dating Phylogenies**: A phylogenetic tree was constructed using the extracted flanking sequences from *E. coli* genomes. Bayesian phylogenetic inference methods are employed to estimate the divergence times between different lineages, providing insights into the evolutionary history and temporal dynamics of *E. coli* populations. This analysis aids in understanding the spread and emergence of antibiotic resistance within the context of *E. coli* evolution.
+
+  
+  Extract individual gene products from Genbank files
+```
+python3 bin/extract_gene_product.py $file.gbk -p "IS1380 family transposase ISEcp1" "Beta-lactamase CTX-M-1"
+
+Batch run:
+
+bash bin/batch_extract_gene_product.sh
+```
+  Extract segments from ISEcp1 to blaCTX-M-15 and collapse under one header
+```
+python3 bin/extract_startgene_endgene_collapse.py $file.gbk -s "IS1380 family transposase ISEcp1" -e "Beta-lactamase CTX-M-1"
+
+Don't collapse:
+
+python3 bin/extract_startgene_endgene.py $file.gbk -s "IS1380 family transposase ISEcp1" -e "Beta-lactamase CTX-M-1"
+
+Batch run:
+
+bash bin/batch_extract_StartEnd_genes.sh
+```
 
 
 ## Code Structure
