@@ -37,6 +37,10 @@ Batch run:
 ```
 bash bin/batch_extract_StartEnd_genes.sh
 ```
+or
+```
+nextflow run --entry extractgenes -genbank_dir /path/to/genbank/files --outdir /path/to/output/directory 
+```
 Concatenate the extracted segments for the next steps e.g. progressive alignment and phylogeny generation
 ```
 cat *_cut.fasta > concatenated_flank_cut.fasta
