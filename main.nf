@@ -45,13 +45,14 @@ Parameters
 */
 
 params.ref = "test_data/EC958.fasta"
-params.reads = ""
+params.reads = " "
 params.outdir = " "
 params.contigs = " "
 params.mlstdb = "ecoli"
 params.prefix = "core"
 params.blastn = " "
-params.segment = ""
+params.segment = " "
+params.genbank_dir = " "
 
 /*
 #==============================================
