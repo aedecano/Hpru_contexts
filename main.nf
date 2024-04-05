@@ -51,6 +51,7 @@ params.contigs = " "
 params.mlstdb = "ecoli"
 params.prefix = "core"
 params.blastn = " "
+params.segment = ""
 
 /*
 #==============================================
@@ -185,14 +186,33 @@ workflow rawqc {
        RAWFASTQC_SINGLE(reads)
 }
 
-workflow mlst_amr_chrom_plm_contigs_ns {
+workflow hpru_annot {
        Channel.fromPath(params.contigs, checkIfExists:true)
            .map({it -> tuple(it.baseName, it)})
            //.view()
            .set{assembly}
 
-    main:
-    MLST_FROM_CONTIGS(assembly)
-    //AMR_PLM_FROM_CONTIGS(assembly)
-    PLATON_CONTIGS(assembly)
-    }
+       main:
+       MLST_FROM_CONTIGS(assembly)
+       AMR_PLM_FROM_CONTIGS(assembly)
+       PLATON_CONTIGS(assembly)
+    
+}
+
+workflow flanker {
+       Channel.fromPath(params.segment, checkIfExists:true)
+           .map({it -> tuple(it.baseName, it)})
+           //.view()
+           .set{segment}
+       main:
+       FLANKER(segment)
+}
+
+workflow extractgenes {
+       Channel.fromPath(params.genbank_dir)
+              .map({it -> tuple(it.baseName, it)})
+              .set {genbank}
+
+       main:
+       EXTRACTGENE(genbank)
+}
