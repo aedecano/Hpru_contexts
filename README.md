@@ -1,6 +1,6 @@
 ## Overview
 
-This repository contains codes for collecting global genome assemblies of Escherichia coli from diverse sources, annotating these assemblies with the blaCTX-M-15 gene, and subsequently classifying the contigs as either chromosomal or plasmid.
+This repository contains codes for collecting global genome assemblies of Escherichia coli from diverse sources, annotating these assemblies with the blaCTX-M-15 gene, and subsequently classifying the contigs as either chromosomal or plasmid and investigating their phylogenetic relationships.
 
 ## Workflow
 
