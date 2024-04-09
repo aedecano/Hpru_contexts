@@ -10,7 +10,7 @@ This repository contains codes for collecting global genome assemblies of Escher
 
   Fetch metadata form NCBI for the Blackwell samples
 ```
-nextflow run --entry fetch_ncbimetadata --inputCsv N5037_ctm15pos_Blackwell.tsv --outdir ./
+nextflow run -entry fetch_ncbimetadata --inputCsv N5037_ctm15pos_Blackwell.tsv --outdir ./
 ```
 or
 ```
