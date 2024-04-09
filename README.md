@@ -7,14 +7,21 @@ This repository contains codes for collecting global genome assemblies of Escher
 1. **Data Scraping**: Genome assemblies of *E. coli* are scraped from diverse sources, encompassing public databases, research articles, and sequencing projects, to form a global collection of strains.
 
 2. **Metadata Curation**: Relevant metadata associated with each genome assembly, including geographic location, host species, isolation source, and antibiotic resistance profiles, are curated and integrated into the analysis, providing essential context for understanding *E. coli* genetic diversity and epidemiology.
+  Fetch metadata form NCBI for the Blackwell samples
+```
+nextflow run --entry fetch_ncbimetadata --inputCsv N5037_ctm15pos_Blackwell.tsv --outdir ./
+```
+or
+```
+python3 bin/run_esummary.py
+```
+4. **Annotation**: The blaCTX-M-15 gene is annotated within each genome assembly using Abricate (Resfinder database) for sequence alignment and homology detection. This annotation offers insights into the presence or absence of this antibiotic resistance gene across different strains.
 
-3. **Annotation**: The blaCTX-M-15 gene is annotated within each genome assembly using Abricate (Resfinder database) for sequence alignment and homology detection. This annotation offers insights into the presence or absence of this antibiotic resistance gene across different strains.
+5. **Contig Classification**: Following annotation, contigs within each assembly are classified as either chromosomal or plasmid based on sequence features, such as size, GC content, and presence of plasmid-associated genes. This classification aids in understanding the genomic context and potential mobility of the blaCTX-M-15 gene.
 
-4. **Contig Classification**: Following annotation, contigs within each assembly are classified as either chromosomal or plasmid based on sequence features, such as size, GC content, and presence of plasmid-associated genes. This classification aids in understanding the genomic context and potential mobility of the blaCTX-M-15 gene.
+6. **Flanking Sequence Extraction**: Flanking sequences spanning 5 kilobases upstream and downstream of the blaCTX-M-15 gene are extracted from the genome assemblies. These sequences provide context for understanding the genetic environment surrounding the gene and potential regulatory elements or mobile genetic elements associated with its dissemination.
 
-5. **Flanking Sequence Extraction**: Flanking sequences spanning 5 kilobases upstream and downstream of the blaCTX-M-15 gene are extracted from the genome assemblies. These sequences provide context for understanding the genetic environment surrounding the gene and potential regulatory elements or mobile genetic elements associated with its dissemination.
-
-6. **Dating Phylogenies**: A phylogenetic tree was constructed using the extracted flanking sequences from *E. coli* genomes. Bayesian phylogenetic inference methods are employed to estimate the divergence times between different lineages, providing insights into the evolutionary history and temporal dynamics of *E. coli* populations. This analysis aids in understanding the spread and emergence of antibiotic resistance within the context of *E. coli* evolution.
+7. **Dating Phylogenies**: A phylogenetic tree was constructed using the extracted flanking sequences from *E. coli* genomes. Bayesian phylogenetic inference methods are employed to estimate the divergence times between different lineages, providing insights into the evolutionary history and temporal dynamics of *E. coli* populations. This analysis aids in understanding the spread and emergence of antibiotic resistance within the context of *E. coli* evolution.
 
   
   Extract individual gene products from Genbank files
@@ -39,7 +46,7 @@ bash bin/batch_extract_StartEnd_genes.sh
 ```
 or
 ```
-nextflow run --entry extractgenes -genbank_dir /path/to/genbank/files --outdir /path/to/output/directory 
+nextflow run --entry extractgenes --genbank_dir /path/to/genbank/files --outdir /path/to/output/directory 
 ```
 Concatenate the extracted segments for the next steps e.g. progressive alignment and phylogeny generation
 ```
