@@ -7,6 +7,7 @@ This repository contains codes for collecting global genome assemblies of Escher
 1. **Data Scraping**: Genome assemblies of *E. coli* are scraped from diverse sources, encompassing public databases, research articles, and sequencing projects, to form a global collection of strains.
 
 2. **Metadata Curation**: Relevant metadata associated with each genome assembly, including geographic location, host species, isolation source, and antibiotic resistance profiles, are curated and integrated into the analysis, providing essential context for understanding *E. coli* genetic diversity and epidemiology.
+
   Fetch metadata form NCBI for the Blackwell samples
 ```
 nextflow run --entry fetch_ncbimetadata --inputCsv N5037_ctm15pos_Blackwell.tsv --outdir ./
