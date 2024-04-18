@@ -2,6 +2,12 @@
 
 This repository contains codes for collecting global genome assemblies of Escherichia coli from diverse sources, annotating these assemblies with the blaCTX-M-15 gene, and subsequently classifying the contigs as either chromosomal or plasmid and investigating their phylogenetic relationships.
 
+## Code Structure
+
+- `modules/`: Contains the processes for the Nexflow subworkflows.
+- `conda/`: Contains yaml files for the conda environments.
+- `bin/`: Contains individual scripts for parsing and plotting all relevant data.
+
 ## Workflow
 
 1. **Data Scraping**: Genome assemblies of *E. coli* are scraped from diverse sources, encompassing public databases, research articles, and sequencing projects, to form a global collection of strains.
@@ -53,11 +59,4 @@ Concatenate the extracted segments for the next steps e.g. progressive alignment
 ```
 cat *_cut.fasta > concatenated_flank_cut.fasta
 ```
-
-
-## Code Structure
-
-- `modules/`: Contains the processes for the Nexflow subworkflows.
-- `conda/`: Contains yaml files for the conda environments.
-- `bin/`: Contains individual scripts for parsing and plotting all relevant data.
 
